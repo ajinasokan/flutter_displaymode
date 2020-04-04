@@ -1,0 +1,9 @@
+.DS_Store
+.dart_tool/
+.idea/
+.gradle/
+
+.packages
+.pub/
+
+build/
