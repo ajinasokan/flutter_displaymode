@@ -4,7 +4,7 @@ A Flutter plugin to set display mode in Android. This library should be used as 
 
 ## Getting Started
 
-Add library to pubspec:
+Add [package](https://pub.dev/packages/flutter_displaymode) to pubspec:
 
 ```
 dependencies:
