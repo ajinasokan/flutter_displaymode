@@ -38,11 +38,17 @@ try{
 Get currently selected mode:
 
 ```dart
+// if this is null it means app is in auto mode
+// once you have made a selection flag will be enabled
 DisplayMode m = modes.firstWhere((m) => m.selected, orElse: () => null);
 ```
 
 Set a mode:
 
 ```dart
+// this setting is per session. 
+// so do this inside initState of your root widget.
 await FlutterDisplayMode.setMode(modes[0]);
 ```
+
+You can check out an example [here](https://github.com/ajinasokan/flutter_displaymode/blob/master/example/lib/main.dart).
