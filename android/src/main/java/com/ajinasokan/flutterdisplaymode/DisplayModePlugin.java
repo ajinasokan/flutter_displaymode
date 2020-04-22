@@ -30,7 +30,7 @@ public class DisplayModePlugin implements FlutterPlugin, MethodCallHandler, Acti
     private Activity activity;
     private static final String METHOD_GET_CURRENT_MODE = "getCurrentMode";
     private static final String METHOD_GET_SUPPORTED_MODES = "getSupportedModes";
-    private static final String METHOD_SET_DEFAULT_MODE = "setDefaultMode";
+    private static final String METHOD_SET_DEVICE_DEFAULT = "setDeviceDefault";
     private static final String METHOD_SET_MODE = "setMode";
 
     @Override
@@ -58,11 +58,11 @@ public class DisplayModePlugin implements FlutterPlugin, MethodCallHandler, Acti
             case METHOD_GET_SUPPORTED_MODES:
                 getSupportedModes(result);
                 break;
+            case METHOD_SET_DEVICE_DEFAULT:
+                setDeviceDefault(result);
+                break;
             case METHOD_SET_MODE:
                 setMode(call, result);
-                break;
-            case METHOD_SET_DEFAULT_MODE:
-                setDefaultMode(result);
                 break;
             default:
                 result.notImplemented();
@@ -134,7 +134,7 @@ public class DisplayModePlugin implements FlutterPlugin, MethodCallHandler, Acti
     }
 
     @RequiresApi(api = Build.VERSION_CODES.M)
-    private void setDefaultMode(@NonNull Result result) {
+    private void setDeviceDefault(@NonNull Result result) {
         final Window window = activity.getWindow();
         final WindowManager.LayoutParams params = window.getAttributes();
         params.preferredDisplayModeId = getCurrentMode().getModeId();

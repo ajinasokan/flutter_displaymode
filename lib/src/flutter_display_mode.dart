@@ -33,7 +33,12 @@ class FlutterDisplayMode {
     );
   }
 
-  static Future<void> setDefaultMode() async {
+  static Future<void> setDeviceDefault() async {
+    final List<DisplayMode> modes = await supported;
+    assert(
+      modes.where((DisplayMode m) => m.selected)?.isEmpty ?? true,
+      'You already set a default mode.',
+    );
     return await _channel.invokeMethod<void>('setDefaultMode');
   }
 }
