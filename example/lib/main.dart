@@ -106,7 +106,7 @@ class _MyAppState extends State<MyApp> {
         ),
         floatingActionButton: FloatingActionButton(
           tooltip: 'Set default mode',
-          onPressed: FlutterDisplayMode.setDefaultMode,
+          onPressed: FlutterDisplayMode.setDeviceDefault,
           child: Icon(Icons.build),
         ),
       ),
