@@ -39,6 +39,6 @@ class FlutterDisplayMode {
       modes.where((DisplayMode m) => m.selected)?.isEmpty ?? true,
       'You already set a default mode.',
     );
-    return await _channel.invokeMethod<void>('setDefaultMode');
+    return await _channel.invokeMethod<void>('setDeviceDefault');
   }
 }
