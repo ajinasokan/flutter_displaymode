@@ -1,9 +1,9 @@
 #
 # To learn more about a Podspec see http://guides.cocoapods.org/syntax/podspec.html.
-# Run `pod lib lint flutterdisplaymode.podspec' to validate before publishing.
+# Run `pod lib lint flutter_displaymode.podspec' to validate before publishing.
 #
 Pod::Spec.new do |s|
-  s.name             = 'flutterdisplaymode'
+  s.name             = 'flutter_display_mode'
   s.version          = '0.0.1'
   s.summary          = 'A Flutter plugin to set display mode in Android'
   s.description      = <<-DESC
