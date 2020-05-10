@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:developer';
 
 import 'package:flutter/services.dart';
 
@@ -35,10 +36,10 @@ class FlutterDisplayMode {
 
   static Future<void> setDeviceDefault() async {
     final List<DisplayMode> modes = await supported;
-    assert(
-      modes.where((DisplayMode m) => m.selected)?.isEmpty ?? true,
-      'You already set a default mode.',
-    );
-    return await _channel.invokeMethod<void>('setDeviceDefault');
+    if (modes.where((DisplayMode m) => m.selected)?.isEmpty ?? true) {
+      return await _channel.invokeMethod<void>('setDeviceDefault');
+    } else {
+      log('You already set a default mode.');
+    }
   }
 }
