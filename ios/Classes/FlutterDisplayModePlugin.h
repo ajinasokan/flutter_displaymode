@@ -1,4 +1,4 @@
 #import <Flutter/Flutter.h>
 
-@interface FlutterDisplayModePlugin : NSObject<FlutterPlugin>
+@interface DisplayModePlugin : NSObject<FlutterPlugin>
 @end

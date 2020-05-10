@@ -3,7 +3,7 @@ import UIKit
 
 public class SwiftFlutterDisplayModePlugin: NSObject, FlutterPlugin {
   public static func register(with registrar: FlutterPluginRegistrar) {
-    let channel = FlutterMethodChannel(name: "flutter_display_mode", binaryMessenger: registrar.messenger())
+    let channel = FlutterMethodChannel(name: "flutter_displaymode", binaryMessenger: registrar.messenger())
     let instance = SwiftFlutterDisplayModePlugin()
     registrar.addMethodCallDelegate(instance, channel: channel)
   }
