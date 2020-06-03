@@ -3,6 +3,7 @@
 .idea/
 .gradle/
 
+.lock
 .packages
 .pub/
 
