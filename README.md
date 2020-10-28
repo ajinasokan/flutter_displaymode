@@ -10,7 +10,7 @@ Add [package](https://pub.dev/packages/flutter_displaymode) to `pubspec.yaml` th
 
 ```
 dependencies:
-  flutter_displaymode: 0.1.0
+  flutter_displaymode: 0.1.1
 ```
 
 ## Methods
