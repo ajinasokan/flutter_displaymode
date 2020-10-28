@@ -2,9 +2,11 @@
 .dart_tool/
 .idea/
 .gradle/
+.vscode/
 
 .lock
 .packages
 .pub/
+pubspec.lock
 
 build/
