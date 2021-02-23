@@ -57,11 +57,11 @@ class _MyAppState extends State<MyApp> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: <Widget>[
-                RaisedButton(
+                ElevatedButton(
                   child: const Text('Fetch modes (Native)'),
                   onPressed: fetchModes,
                 ),
-                RaisedButton(
+                ElevatedButton(
                   child: const Text('Current mode (Native)'),
                   onPressed: () async {
                     final DisplayMode mode = await getCurrentMode();
@@ -104,7 +104,7 @@ class _MyAppState extends State<MyApp> {
             ),
           ],
         ),
-        floatingActionButton: FloatingActionButton(
+        floatingActionButton: const FloatingActionButton(
           tooltip: 'Set default mode',
           onPressed: FlutterDisplayMode.setDeviceDefault,
           child: Icon(Icons.build),

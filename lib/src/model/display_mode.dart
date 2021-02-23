@@ -1,10 +1,10 @@
 class DisplayMode {
   const DisplayMode({
-    this.id,
-    this.width,
-    this.height,
-    this.refreshRate,
-    this.selected,
+    required this.id,
+    required this.width,
+    required this.height,
+    required this.refreshRate,
+    required this.selected,
   });
 
   factory DisplayMode.fromJson(Map<String, dynamic> json) {
