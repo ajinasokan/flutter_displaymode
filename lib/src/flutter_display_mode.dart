@@ -11,15 +11,9 @@ class FlutterDisplayMode {
   static const MethodChannel _channel = MethodChannel('flutter_display_mode');
 
   static Future<List<DisplayMode>> get supported async {
-    final List<dynamic>? modes = (await _channel.invokeMethod<List<dynamic>>(
+    final List<dynamic> modes = (await _channel.invokeMethod<List<dynamic>>(
       'getSupportedModes',
-    )) ?? <dynamic>[];
-    if (modes == null) {
-      throw PlatformException(
-        code: '0',
-        message: 'No supported display mode founded on platform.',
-      );
-    }
+    ))!;
     return modes.map((dynamic i) {
       final Map<String, dynamic> item =
           (i as Map<dynamic, dynamic>).cast<String, dynamic>();
