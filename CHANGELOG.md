@@ -1,3 +1,7 @@
+## 0.2.0-nullsafety.0
+
+* Migrate to null safety.
+
 ## 0.1.1
 
 * Fix pubspec warning for iOS [issue#4](https://github.com/ajinasokan/flutter_displaymode/issues/4)
