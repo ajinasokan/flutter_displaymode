@@ -13,6 +13,13 @@ dependencies:
   flutter_displaymode: 0.1.1
 ```
 
+For null safe version:
+
+```
+dependencies:
+  flutter_displaymode: 0.2.0-nullsafety.0
+```
+
 ## Methods
 
 ### Get supported modes
