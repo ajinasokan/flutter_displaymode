@@ -22,6 +22,8 @@ dependencies:
 
 ## Methods
 
+Following methods are for >= 0.3.0 versions. For old version see [pub docs](https://pub.dev/documentation/flutter_displaymode/0.1.1/).
+
 ### Get supported modes
 
 `FlutterDisplayMode.supported` returns all the modes that can be set as the preferred mode. This always returns `DisplayMode.auto` as one of the modes.
