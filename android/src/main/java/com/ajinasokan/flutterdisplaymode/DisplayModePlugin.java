@@ -28,10 +28,10 @@ import io.flutter.plugin.common.PluginRegistry.Registrar;
  */
 public class DisplayModePlugin implements FlutterPlugin, MethodCallHandler, ActivityAware {
     private Activity activity;
-    private static final String METHOD_GET_CURRENT_MODE = "getCurrentMode";
+    private static final String METHOD_GET_ACTIVE_MODE = "getActiveMode";
     private static final String METHOD_GET_SUPPORTED_MODES = "getSupportedModes";
-    private static final String METHOD_SET_DEVICE_DEFAULT = "setDeviceDefault";
-    private static final String METHOD_SET_MODE = "setMode";
+    private static final String METHOD_GET_PREFERRED_MODE = "getPreferredMode";
+    private static final String METHOD_SET_PREFERRED_MODE = "setPreferredMode";
 
     @Override
     public void onAttachedToEngine(@NonNull FlutterPluginBinding flutterPluginBinding) {
@@ -52,17 +52,17 @@ public class DisplayModePlugin implements FlutterPlugin, MethodCallHandler, Acti
         }
 
         switch (call.method) {
-            case METHOD_GET_CURRENT_MODE:
-                getCurrentMode(result);
+            case METHOD_GET_ACTIVE_MODE:
+                getActiveMode(result);
                 break;
             case METHOD_GET_SUPPORTED_MODES:
                 getSupportedModes(result);
                 break;
-            case METHOD_SET_DEVICE_DEFAULT:
-                setDeviceDefault(result);
+            case METHOD_GET_PREFERRED_MODE:
+                getPreferredMode(result);
                 break;
-            case METHOD_SET_MODE:
-                setMode(call, result);
+            case METHOD_SET_PREFERRED_MODE:
+                setPreferredMode(call, result);
                 break;
             default:
                 result.notImplemented();
@@ -70,23 +70,16 @@ public class DisplayModePlugin implements FlutterPlugin, MethodCallHandler, Acti
         }
     }
 
+
     @RequiresApi(api = Build.VERSION_CODES.M)
-    private Display.Mode getCurrentMode() {
+    private void getActiveMode(@NonNull Result result) {
         final WindowManager windowManager = (WindowManager) activity.getSystemService(Context.WINDOW_SERVICE);
-        final Display display = windowManager.getDefaultDisplay();
-        return display.getMode();
-    }
-
-
-    @RequiresApi(api = Build.VERSION_CODES.M)
-    private void getCurrentMode(@NonNull Result result) {
-        final Display.Mode mode = getCurrentMode();
+        final Display.Mode mode =  windowManager.getDefaultDisplay().getMode();
         final HashMap<String, Object> ret = new HashMap<>();
         ret.put("id", mode.getModeId());
         ret.put("width", mode.getPhysicalWidth());
         ret.put("height", mode.getPhysicalHeight());
         ret.put("refreshRate", mode.getRefreshRate());
-        ret.put("selected", true);
         result.success(ret);
     }
 
@@ -96,13 +89,6 @@ public class DisplayModePlugin implements FlutterPlugin, MethodCallHandler, Acti
         final WindowManager windowManager = (WindowManager) activity.getSystemService(Context.WINDOW_SERVICE);
         final Display display = windowManager.getDefaultDisplay();
         final Display.Mode[] modes = display.getSupportedModes();
-        if (modes == null) {
-            return ret;
-        }
-
-        final Window window = activity.getWindow();
-        final WindowManager.LayoutParams params = window.getAttributes();
-        final int selectedMode = params.preferredDisplayModeId;
 
         for (final Display.Mode mode : modes) {
             final HashMap<String, Object> item = new HashMap<>();
@@ -110,7 +96,6 @@ public class DisplayModePlugin implements FlutterPlugin, MethodCallHandler, Acti
             item.put("width", mode.getPhysicalWidth());
             item.put("height", mode.getPhysicalHeight());
             item.put("refreshRate", mode.getRefreshRate());
-            item.put("selected", mode.getModeId() == selectedMode);
             ret.add(item);
         }
         return ret;
@@ -122,22 +107,42 @@ public class DisplayModePlugin implements FlutterPlugin, MethodCallHandler, Acti
     }
 
     @RequiresApi(api = Build.VERSION_CODES.M)
-    private void setMode(@NonNull MethodCall call, @NonNull Result result) {
-        if (call.argument("mode") != null) {
-            final int mode = (int) Objects.requireNonNull(call.argument("mode"));
-            final Window window = activity.getWindow();
-            final WindowManager.LayoutParams params = window.getAttributes();
-            params.preferredDisplayModeId = mode;
-            window.setAttributes(params);
-            result.success(null);
+    private void getPreferredMode(@NonNull Result result) {
+        final Window window = activity.getWindow();
+        final WindowManager.LayoutParams params = window.getAttributes();
+
+        final WindowManager windowManager = (WindowManager) activity.getSystemService(Context.WINDOW_SERVICE);
+        final Display display = windowManager.getDefaultDisplay();
+        final Display.Mode[] modes = display.getSupportedModes();
+
+        // look for matching mode and return it
+        for (final Display.Mode mode : modes) {
+            if(params.preferredDisplayModeId == mode.getModeId()) {
+                final HashMap<String, Object> item = new HashMap<>();
+                item.put("id", mode.getModeId());
+                item.put("width", mode.getPhysicalWidth());
+                item.put("height", mode.getPhysicalHeight());
+                item.put("refreshRate", mode.getRefreshRate());
+                result.success(item);
+                return;
+            }
         }
+
+        // no match found. return as automatic
+        final HashMap<String, Object> ret = new HashMap<>();
+        ret.put("id", 0);
+        ret.put("width", 0);
+        ret.put("height", 0);
+        ret.put("refreshRate", 0.0);
+        result.success(ret);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.M)
-    private void setDeviceDefault(@NonNull Result result) {
+    private void setPreferredMode(@NonNull MethodCall call, @NonNull Result result) {
+        final int mode = (int) call.argument("mode");
         final Window window = activity.getWindow();
         final WindowManager.LayoutParams params = window.getAttributes();
-        params.preferredDisplayModeId = getCurrentMode().getModeId();
+        params.preferredDisplayModeId = mode;
         window.setAttributes(params);
         result.success(null);
     }

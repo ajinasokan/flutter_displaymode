@@ -11,9 +11,10 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   List<DisplayMode> modes = <DisplayMode>[];
-  DisplayMode selected;
+  DisplayMode? active;
+  DisplayMode? preferred;
 
-  Future<void> fetchModes() async {
+  Future<void> fetchAll() async {
     try {
       modes = await FlutterDisplayMode.supported;
       modes.forEach(print);
@@ -36,15 +37,12 @@ class _MyAppState extends State<MyApp> {
       /// noAPI - No API support. Only Marshmallow and above.
       /// noActivity - Activity is not available. Probably app is in background
     }
-    selected =
-        modes.firstWhere((DisplayMode m) => m.selected, orElse: () => null);
-    if (mounted) {
-      setState(() {});
-    }
-  }
 
-  Future<DisplayMode> getCurrentMode() async {
-    return await FlutterDisplayMode.current;
+    preferred = await FlutterDisplayMode.preferred;
+
+    active = await FlutterDisplayMode.active;
+
+    setState(() {});
   }
 
   @override
@@ -52,63 +50,67 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(title: const Text('Plugin example app')),
-        body: Column(
-          children: <Widget>[
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: <Widget>[
-                ElevatedButton(
-                  child: const Text('Fetch modes (Native)'),
-                  onPressed: fetchModes,
+        body: Padding(
+          padding: const EdgeInsets.only(top: 16, left: 16, right: 16),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Row(
+                children: [
+                  Text(
+                    'Available modes',
+                    style: Theme.of(context).textTheme.headline5,
+                  ),
+                  TextButton.icon(
+                    icon: const Icon(Icons.refresh),
+                    onPressed: () {
+                      fetchAll();
+                    },
+                    label: const Text('Fetch'),
+                  ),
+                ],
+              ),
+              if (modes.isEmpty) const Text('Nothing here'),
+              for (DisplayMode mode in modes)
+                Row(
+                  children: [
+                    Radio<DisplayMode>(
+                      value: mode,
+                      groupValue: preferred,
+                      onChanged: (DisplayMode? newMode) async {
+                        await FlutterDisplayMode.setPreferredMode(newMode!);
+                        await Future<dynamic>.delayed(
+                            const Duration(milliseconds: 100));
+                        await fetchAll();
+                        setState(() {});
+                      },
+                    ),
+                    if (mode == DisplayMode.auto)
+                      const Text('Automatic')
+                    else
+                      Text(mode.toString()),
+                    if (mode == active) const Text(' [ACTIVE]'),
+                  ],
                 ),
-                ElevatedButton(
-                  child: const Text('Current mode (Native)'),
-                  onPressed: () async {
-                    final DisplayMode mode = await getCurrentMode();
-                    print(mode);
-                    showDialog<void>(
-                      context: context,
-                      builder: (_) => AlertDialog(
-                        content: Text(mode.toString()),
-                      ),
+              const Divider(),
+              Expanded(
+                child: ListView.builder(
+                  itemBuilder: (BuildContext _, int i) {
+                    return Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text('Index: $i'),
                     );
                   },
                 ),
-              ],
-            ),
-            DropdownButton<DisplayMode>(
-              value: selected,
-              items: modes
-                  .map((DisplayMode m) => DropdownMenuItem<DisplayMode>(
-                        child: Text(m.toString()),
-                        value: m,
-                      ))
-                  .toList(),
-              onChanged: (DisplayMode m) async {
-                await FlutterDisplayMode.setMode(m);
-                selected = m;
-                if (mounted) {
-                  setState(() {});
-                }
-              },
-            ),
-            Expanded(
-              child: ListView.builder(
-                itemBuilder: (BuildContext _, int i) {
-                  return Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Text('Index: $i'),
-                  );
-                },
               ),
-            ),
-          ],
+            ],
+          ),
         ),
-        floatingActionButton: const FloatingActionButton(
-          tooltip: 'Set default mode',
-          onPressed: FlutterDisplayMode.setDeviceDefault,
-          child: Icon(Icons.build),
-        ),
+        // floatingActionButton: const FloatingActionButton(
+        //   tooltip: 'Set default mode',
+        //   onPressed: FlutterDisplayMode.setDeviceDefault,
+        //   child: Icon(Icons.build),
+        // ),
       ),
     );
   }

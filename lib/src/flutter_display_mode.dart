@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:developer';
 
 import 'package:flutter/services.dart';
 
@@ -10,45 +9,46 @@ class FlutterDisplayMode {
 
   static const MethodChannel _channel = MethodChannel('flutter_display_mode');
 
+  /// [supported] returns all the modes that can be set as the preferred mode.
+  /// This always returns [DisplayMode.auto] as one of the modes.
   static Future<List<DisplayMode>> get supported async {
-    final List<dynamic> modes = (await _channel.invokeMethod<List<dynamic>>(
-      'getSupportedModes',
-    ))!;
-    return modes.map((dynamic i) {
+    final List<dynamic> rawModes =
+        (await _channel.invokeMethod<List<dynamic>>('getSupportedModes'))!;
+    final List<DisplayMode> modes = rawModes.map((dynamic i) {
       final Map<String, dynamic> item =
           (i as Map<dynamic, dynamic>).cast<String, dynamic>();
       return DisplayMode.fromJson(item);
     }).toList();
+    modes.insert(0, DisplayMode.auto);
+    return modes;
   }
 
-  static Future<DisplayMode> get current async {
-    final Map<String, dynamic>? mode =
-        (await _channel.invokeMethod<Map<dynamic, dynamic>>(
-      'getCurrentMode',
-    ))
-            ?.cast<String, dynamic>();
-    if (mode == null) {
-      throw PlatformException(
-        code: '0',
-        message: 'No supported display mode founded on platform.',
-      );
-    }
-    return DisplayMode.fromJson(mode);
+  /// [active] fetches the currently active mode. This is not always the
+  /// preferred mode set by [setPreferredMode]. It can be altered by the
+  /// system based on the display settings.
+  static Future<DisplayMode> get active async {
+    final Map<dynamic, dynamic> mode =
+        (await _channel.invokeMethod<Map<dynamic, dynamic>>('getActiveMode'))!;
+
+    return DisplayMode.fromJson(mode.cast<String, dynamic>());
   }
 
-  static Future<void> setMode(DisplayMode mode) async {
+  /// [preferred] returns the currently preferred mode. If not manually set
+  /// with [setPreferredMode] then it will be [DisplayMode.auto].
+  static Future<DisplayMode> get preferred async {
+    final Map<dynamic, dynamic> mode = (await _channel
+        .invokeMethod<Map<dynamic, dynamic>>('getPreferredMode'))!;
+
+    return DisplayMode.fromJson(mode.cast<String, dynamic>());
+  }
+
+  /// [setPreferredMode] changes the preferred mode. It is upto the system
+  /// to use this. Sometimes system can choose not switch to this based on
+  /// internal heuristics. Check [active] to see if it actually switches.
+  static Future<void> setPreferredMode(DisplayMode mode) async {
     return await _channel.invokeMethod<void>(
-      'setMode',
+      'setPreferredMode',
       <String, dynamic>{'mode': mode.id},
     );
-  }
-
-  static Future<void> setDeviceDefault() async {
-    final List<DisplayMode> modes = await supported;
-    if (modes.where((DisplayMode m) => m.selected).isEmpty) {
-      return await _channel.invokeMethod<void>('setDeviceDefault');
-    } else {
-      log('You already set a default mode.');
-    }
   }
 }

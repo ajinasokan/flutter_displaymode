@@ -4,7 +4,6 @@ class DisplayMode {
     required this.width,
     required this.height,
     required this.refreshRate,
-    required this.selected,
   });
 
   factory DisplayMode.fromJson(Map<String, dynamic> json) {
@@ -13,7 +12,6 @@ class DisplayMode {
       width: json['width'] as int,
       height: json['height'] as int,
       refreshRate: json['refreshRate'] as double,
-      selected: json['selected'] as bool,
     );
   }
 
@@ -21,7 +19,13 @@ class DisplayMode {
   final int width;
   final int height;
   final double refreshRate;
-  final bool selected;
+
+  static const DisplayMode auto = DisplayMode(
+    id: 0,
+    width: 0,
+    height: 0,
+    refreshRate: 0,
+  );
 
   @override
   String toString() {
@@ -35,13 +39,8 @@ class DisplayMode {
           runtimeType == other.runtimeType &&
           width == other.width &&
           height == other.height &&
-          refreshRate == other.refreshRate &&
-          selected == other.selected;
+          refreshRate == other.refreshRate;
 
   @override
-  int get hashCode =>
-      width.hashCode ^
-      height.hashCode ^
-      refreshRate.hashCode ^
-      selected.hashCode;
+  int get hashCode => width.hashCode ^ height.hashCode ^ refreshRate.hashCode;
 }
