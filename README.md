@@ -17,7 +17,7 @@ For null safe version:
 
 ```
 dependencies:
-  flutter_displaymode: 0.2.0-nullsafety.0
+  flutter_displaymode: 0.3.0-nullsafety.0
 ```
 
 ## Methods

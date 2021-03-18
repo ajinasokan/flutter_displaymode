@@ -1,3 +1,11 @@
+## 0.3.0-nullsafety.0
+
+* Breaking changes to fix [issue#9](https://github.com/ajinasokan/flutter_displaymode/issues/9)
+* `FlutterDisplayMode.current` renamed to `FlutterDisplayMode.active`
+* `FlutterDisplayMode.setMode` renamed to `FlutterDisplayMode.setPreferredMode`
+* Added `FlutterDisplayMode.preferred`
+* Removed `DisplayMode.selected` field. Use `FlutterDisplayMode.active` instead.
+
 ## 0.2.0-nullsafety.0
 
 * Migrate to null safety.
