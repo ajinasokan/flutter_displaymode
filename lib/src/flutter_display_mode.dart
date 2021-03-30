@@ -51,4 +51,42 @@ class FlutterDisplayMode {
       <String, dynamic>{'mode': mode.id},
     );
   }
+
+  /// [setHighRefreshRate] changes preferred mode to highest refresh rate
+  /// available maintaining current resolution
+  static Future<void> setHighRefreshRate() async {
+    final List<DisplayMode> modes = await supported;
+    final DisplayMode activeMode = await active;
+    DisplayMode newMode = activeMode;
+    for (final DisplayMode mode in modes) {
+      if (mode.height == newMode.height &&
+          mode.width == newMode.width &&
+          mode.refreshRate > newMode.refreshRate) {
+        newMode = mode;
+      }
+    }
+    print(newMode);
+    if (newMode != activeMode) {
+      await setPreferredMode(newMode);
+    }
+  }
+
+  /// [setLowRefreshRate] changes preferred mode to lowest refresh rate
+  /// available maintaining current resolution
+  static Future<void> setLowRefreshRate() async {
+    final List<DisplayMode> modes = await supported;
+    final DisplayMode activeMode = await active;
+    DisplayMode newMode = activeMode;
+    for (final DisplayMode mode in modes) {
+      if (mode.height == newMode.height &&
+          mode.width == newMode.width &&
+          mode.refreshRate < newMode.refreshRate) {
+        newMode = mode;
+      }
+    }
+    print(newMode);
+    if (newMode != activeMode) {
+      await setPreferredMode(newMode);
+    }
+  }
 }

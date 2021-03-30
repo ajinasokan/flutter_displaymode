@@ -92,6 +92,32 @@ class _MyAppState extends State<MyApp> {
                     if (mode == active) const Text(' [ACTIVE]'),
                   ],
                 ),
+              if (modes.isNotEmpty)
+                Row(
+                  children: <Widget>[
+                    ElevatedButton(
+                      onPressed: () async {
+                        await FlutterDisplayMode.setHighRefreshRate();
+                        await Future<dynamic>.delayed(
+                            const Duration(milliseconds: 100));
+                        await fetchAll();
+                        setState(() {});
+                      },
+                      child: const Text('Highest Hz'),
+                    ),
+                    const SizedBox(width: 8),
+                    ElevatedButton(
+                      onPressed: () async {
+                        await FlutterDisplayMode.setLowRefreshRate();
+                        await Future<dynamic>.delayed(
+                            const Duration(milliseconds: 100));
+                        await fetchAll();
+                        setState(() {});
+                      },
+                      child: const Text('Lowest Hz'),
+                    ),
+                  ],
+                ),
               const Divider(),
               Expanded(
                 child: ListView.builder(
