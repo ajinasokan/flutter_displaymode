@@ -65,7 +65,6 @@ class FlutterDisplayMode {
         newMode = mode;
       }
     }
-    print(newMode);
     if (newMode != activeMode) {
       await setPreferredMode(newMode);
     }
@@ -84,7 +83,6 @@ class FlutterDisplayMode {
         newMode = mode;
       }
     }
-    print(newMode);
     if (newMode != activeMode) {
       await setPreferredMode(newMode);
     }
