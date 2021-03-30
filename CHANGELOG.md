@@ -1,3 +1,7 @@
+## 0.3.1-nullsafety.0
+
+* Add `FlutterDisplayMode.setHighRefreshRate` and `FlutterDisplayMode.setLowRefreshRate` methods
+
 ## 0.3.0-nullsafety.0
 
 * Breaking changes to fix [issue#9](https://github.com/ajinasokan/flutter_displaymode/issues/9)

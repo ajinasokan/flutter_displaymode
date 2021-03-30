@@ -17,7 +17,7 @@ For null safe version:
 
 ```
 dependencies:
-  flutter_displaymode: 0.3.0-nullsafety.0
+  flutter_displaymode: 0.3.1-nullsafety.0
 ```
 
 ## Methods
@@ -83,3 +83,20 @@ final DisplayMode m = await FlutterDisplayMode.preferred;
 
 You can check out an example [here](https://github.com/ajinasokan/flutter_displaymode/blob/master/example/lib/main.dart).
 
+### Set to highest/lowest framerate
+
+> Available since 0.3.1-nullsafety.0
+
+Use helper functions `FlutterDisplayMode.setHighRefreshRate` or `FlutterDisplayMode.setLowRefreshRate` to switch to highest or lowest refresh rate maintaining current resolution.
+
+```dart
+// current: #1 1440x3120 @ 60Hz
+// new: #2 1440x3120 @ 90Hz
+await FlutterDisplayMode.setHighRefreshRate();
+
+// current: #2 1440x3120 @ 90Hz
+// new: #1 1440x3120 @ 60Hz
+await FlutterDisplayMode.setLowRefreshRate();
+```
+
+You can check out a complete example [here](https://github.com/ajinasokan/flutter_displaymode/blob/master/example/lib/main.dart).
