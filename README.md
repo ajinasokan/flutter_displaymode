@@ -10,14 +10,14 @@ Add [package](https://pub.dev/packages/flutter_displaymode) to `pubspec.yaml` th
 
 ```
 dependencies:
-  flutter_displaymode: 0.1.1
+  flutter_displaymode: ^0.1.1
 ```
 
 For null safe version:
 
 ```
 dependencies:
-  flutter_displaymode: 0.3.1-nullsafety.0
+  flutter_displaymode: ^0.3.2
 ```
 
 ## Methods
