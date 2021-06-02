@@ -1,10 +1,10 @@
 name: flutter_displaymode
 description: A Flutter plugin to set display mode on Android.
-version: 0.3.1-nullsafety.0
+version: 0.3.2
 homepage: https://github.com/ajinasokan/flutter_displaymode
 
 environment:
-  sdk: ">=2.12.0-0 <3.0.0"
+  sdk: ">=2.12.0 <3.0.0"
   flutter: ">1.22.6"
 
 dependencies:

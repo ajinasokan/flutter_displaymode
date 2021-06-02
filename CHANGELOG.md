@@ -1,3 +1,7 @@
+## 0.3.2
+
+* Fix setHighRefreshRate/setLowRefreshRate
+
 ## 0.3.1-nullsafety.0
 
 * Add `FlutterDisplayMode.setHighRefreshRate` and `FlutterDisplayMode.setLowRefreshRate` methods
