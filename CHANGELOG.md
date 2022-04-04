@@ -1,3 +1,7 @@
+## 0.4.0
+
+* Removed deprecated `registerWith` function to cleanup warnings
+
 ## 0.3.2
 
 * Fix setHighRefreshRate/setLowRefreshRate
