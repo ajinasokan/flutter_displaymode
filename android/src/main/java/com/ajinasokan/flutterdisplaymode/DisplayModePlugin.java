@@ -21,7 +21,6 @@ import io.flutter.plugin.common.MethodCall;
 import io.flutter.plugin.common.MethodChannel;
 import io.flutter.plugin.common.MethodChannel.MethodCallHandler;
 import io.flutter.plugin.common.MethodChannel.Result;
-import io.flutter.plugin.common.PluginRegistry.Registrar;
 
 /**
  * DisplayModePlugin
@@ -174,12 +173,4 @@ public class DisplayModePlugin implements FlutterPlugin, MethodCallHandler, Acti
     public void onReattachedToActivityForConfigChanges(@NonNull ActivityPluginBinding binding) {
         onAttachedToActivity(binding);
     }
-
-    public static void registerWith(Registrar registrar) {
-        final MethodChannel channel = new MethodChannel(registrar.messenger(), "flutter_display_mode");
-        final DisplayModePlugin instance = new DisplayModePlugin();
-        instance.setActivity(registrar.activity());
-        channel.setMethodCallHandler(instance);
-    }
-
 }

@@ -1,4 +1,4 @@
-package com.ajinasokan.flutterdisplaymode_example;
+package com.ajinasokan.example;
 
 import io.flutter.embedding.android.FlutterActivity;
 
