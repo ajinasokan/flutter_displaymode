@@ -37,13 +37,17 @@ class DisplayMode {
   }
 
   @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      other is DisplayMode &&
-          runtimeType == other.runtimeType &&
-          width == other.width &&
-          height == other.height &&
-          refreshRate == other.refreshRate;
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (other is! DisplayMode || runtimeType != other.runtimeType) {
+      return false;
+    }
+    return width == other.width &&
+        height == other.height &&
+        refreshRate == other.refreshRate;
+  }
 
   @override
   int get hashCode => width.hashCode ^ height.hashCode ^ refreshRate.hashCode;
