@@ -33,7 +33,7 @@ class DisplayMode {
 
   @override
   String toString() {
-    return '#$id ${width}x$height @ ${refreshRate.toInt()}Hz';
+    return '#$id $width×$height @ ${refreshRate.toInt()}Hz';
   }
 
   @override
