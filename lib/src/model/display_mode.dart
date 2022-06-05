@@ -1,3 +1,5 @@
+import 'package:flutter/painting.dart';
+
 class DisplayMode {
   const DisplayMode({
     required this.id,
@@ -26,6 +28,8 @@ class DisplayMode {
     height: 0,
     refreshRate: 0,
   );
+
+  Size get size => Size(width.toDouble(), height.toDouble());
 
   @override
   String toString() {
