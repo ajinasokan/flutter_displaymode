@@ -1,3 +1,9 @@
+## 0.4.1
+
+* Add `size` getter to `DisplayMode`.
+* Use `×` instead of `x` when `toString()`.
+* Improve `==` operator.
+
 ## 0.4.0
 
 * Removed deprecated `registerWith` function to cleanup warnings
