@@ -1,3 +1,7 @@
+## 0.4.1
+
+* Migrate to mavenCentral
+
 ## 0.4.0
 
 * Removed deprecated `registerWith` function to cleanup warnings
