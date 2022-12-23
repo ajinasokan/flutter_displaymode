@@ -12,7 +12,6 @@ import androidx.annotation.RequiresApi;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Objects;
 
 import io.flutter.embedding.engine.plugins.FlutterPlugin;
 import io.flutter.embedding.engine.plugins.activity.ActivityAware;
@@ -69,11 +68,19 @@ public class DisplayModePlugin implements FlutterPlugin, MethodCallHandler, Acti
         }
     }
 
+    @SuppressWarnings("deprecation")
+    Display getDisplay() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            return activity.getApplicationContext().getDisplay();
+        } else {
+            final WindowManager windowManager = (WindowManager) activity.getSystemService(Context.WINDOW_SERVICE);
+            return windowManager.getDefaultDisplay();
+        }
+    }
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     private void getActiveMode(@NonNull Result result) {
-        final WindowManager windowManager = (WindowManager) activity.getSystemService(Context.WINDOW_SERVICE);
-        final Display.Mode mode =  windowManager.getDefaultDisplay().getMode();
+        final Display.Mode mode =  getDisplay().getMode();
         final HashMap<String, Object> ret = new HashMap<>();
         ret.put("id", mode.getModeId());
         ret.put("width", mode.getPhysicalWidth());
@@ -85,8 +92,7 @@ public class DisplayModePlugin implements FlutterPlugin, MethodCallHandler, Acti
     @RequiresApi(api = Build.VERSION_CODES.M)
     private ArrayList<HashMap<String, Object>> getSupportedModes() {
         final ArrayList<HashMap<String, Object>> ret = new ArrayList<>();
-        final WindowManager windowManager = (WindowManager) activity.getSystemService(Context.WINDOW_SERVICE);
-        final Display display = windowManager.getDefaultDisplay();
+        final Display display = getDisplay();
         final Display.Mode[] modes = display.getSupportedModes();
 
         for (final Display.Mode mode : modes) {
@@ -110,8 +116,7 @@ public class DisplayModePlugin implements FlutterPlugin, MethodCallHandler, Acti
         final Window window = activity.getWindow();
         final WindowManager.LayoutParams params = window.getAttributes();
 
-        final WindowManager windowManager = (WindowManager) activity.getSystemService(Context.WINDOW_SERVICE);
-        final Display display = windowManager.getDefaultDisplay();
+        final Display display = getDisplay();
         final Display.Mode[] modes = display.getSupportedModes();
 
         // look for matching mode and return it
@@ -138,7 +143,7 @@ public class DisplayModePlugin implements FlutterPlugin, MethodCallHandler, Acti
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     private void setPreferredMode(@NonNull MethodCall call, @NonNull Result result) {
-        final int mode = (int) call.argument("mode");
+        final int mode = call.argument("mode");
         final Window window = activity.getWindow();
         final WindowManager.LayoutParams params = window.getAttributes();
         params.preferredDisplayModeId = mode;
