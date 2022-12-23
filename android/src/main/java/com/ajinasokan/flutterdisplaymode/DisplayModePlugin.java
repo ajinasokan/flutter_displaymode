@@ -71,7 +71,7 @@ public class DisplayModePlugin implements FlutterPlugin, MethodCallHandler, Acti
     @SuppressWarnings("deprecation")
     Display getDisplay() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-            return activity.getApplicationContext().getDisplay();
+            return activity.getDisplay();
         } else {
             final WindowManager windowManager = (WindowManager) activity.getSystemService(Context.WINDOW_SERVICE);
             return windowManager.getDefaultDisplay();
