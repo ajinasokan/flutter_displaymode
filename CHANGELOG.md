@@ -1,8 +1,18 @@
-## 0.4.1
+## 0.5.1
 
 * Add `size` getter to `DisplayMode`.
 * Use `×` instead of `x` when `toString()`.
 * Improve `==` operator.
+
+## 0.5.0
+
+* Calling `setHighRefreshRate` or `setLowRefreshRate` will always set the display mode. Fixes #20
+* Setting compileSdkVersion to 30
+* Cleaned up all deprecation warnings. Fixes #14
+
+## 0.4.1
+
+* Migrate to mavenCentral
 
 ## 0.4.0
 

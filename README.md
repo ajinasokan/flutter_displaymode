@@ -2,27 +2,31 @@
 
 [![pub package](https://img.shields.io/pub/v/flutter_displaymode.svg)](https://pub.dev/packages/flutter_displaymode)
 
-A Flutter plugin to set display mode in Android. This library should be used as a temporary fix to [#35162](https://github.com/flutter/flutter/issues/35162) until this API gets added to Flutter engine itself.
+A Flutter plugin to set display mode in Android. This is useful to enable high refresh rate in devices with discrete framerates like 60Hz, 90Hz etc. This library is ineffective on devices with LTPO panels and iOS devices with ProMotion.
+
+This library should be used as a temporary fix to [#35162](https://github.com/flutter/flutter/issues/35162) until this API gets added to Flutter engine itself.
 
 ## Getting Started
 
-Add [package](https://pub.dev/packages/flutter_displaymode) to `pubspec.yaml` then re-run `flutter pub get` and restart your app:
+Add library to pubspec then and **rebuild** your app:
 
-```
-dependencies:
-  flutter_displaymode: ^0.1.1
-```
-
-For null safe version:
-
-```
-dependencies:
-  flutter_displaymode: ^0.3.2
+```shell
+flutter pub add flutter_displaymode
 ```
 
-## Methods
+### Set to highest/lowest framerate
 
-Following methods are for >= 0.3.0 versions. For old version see [pub docs](https://pub.dev/documentation/flutter_displaymode/0.1.1/).
+Use helper functions `FlutterDisplayMode.setHighRefreshRate` or `FlutterDisplayMode.setLowRefreshRate` to switch to highest or lowest refresh rate maintaining current resolution.
+
+```dart
+// current: #1 1440x3120 @ 60Hz
+// new: #2 1440x3120 @ 90Hz
+await FlutterDisplayMode.setHighRefreshRate();
+
+// current: #2 1440x3120 @ 90Hz
+// new: #1 1440x3120 @ 60Hz
+await FlutterDisplayMode.setLowRefreshRate();
+```
 
 ### Get supported modes
 
@@ -79,24 +83,6 @@ await FlutterDisplayMode.setPreferredMode(modes[1]);
 
 ```dart
 final DisplayMode m = await FlutterDisplayMode.preferred;
-```
-
-You can check out an example [here](https://github.com/ajinasokan/flutter_displaymode/blob/master/example/lib/main.dart).
-
-### Set to highest/lowest framerate
-
-> Available since 0.3.1-nullsafety.0
-
-Use helper functions `FlutterDisplayMode.setHighRefreshRate` or `FlutterDisplayMode.setLowRefreshRate` to switch to highest or lowest refresh rate maintaining current resolution.
-
-```dart
-// current: #1 1440x3120 @ 60Hz
-// new: #2 1440x3120 @ 90Hz
-await FlutterDisplayMode.setHighRefreshRate();
-
-// current: #2 1440x3120 @ 90Hz
-// new: #1 1440x3120 @ 60Hz
-await FlutterDisplayMode.setLowRefreshRate();
 ```
 
 You can check out a complete example [here](https://github.com/ajinasokan/flutter_displaymode/blob/master/example/lib/main.dart).
