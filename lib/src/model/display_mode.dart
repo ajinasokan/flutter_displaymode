@@ -1,3 +1,5 @@
+import 'package:flutter/painting.dart';
+
 class DisplayMode {
   const DisplayMode({
     required this.id,
@@ -27,19 +29,25 @@ class DisplayMode {
     refreshRate: 0,
   );
 
+  Size get size => Size(width.toDouble(), height.toDouble());
+
   @override
   String toString() {
-    return '#$id ${width}x$height @ ${refreshRate.toInt()}Hz';
+    return '#$id $width×$height @ ${refreshRate.toInt()}Hz';
   }
 
   @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      other is DisplayMode &&
-          runtimeType == other.runtimeType &&
-          width == other.width &&
-          height == other.height &&
-          refreshRate == other.refreshRate;
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (other is! DisplayMode || runtimeType != other.runtimeType) {
+      return false;
+    }
+    return width == other.width &&
+        height == other.height &&
+        refreshRate == other.refreshRate;
+  }
 
   @override
   int get hashCode => width.hashCode ^ height.hashCode ^ refreshRate.hashCode;
