@@ -24,7 +24,7 @@ class _MyAppState extends State<MyApp> {
   @override
   void initState() {
     super.initState();
-    SchedulerBinding.instance!.addPostFrameCallback((_) {
+    SchedulerBinding.instance.addPostFrameCallback((_) {
       fetchAll();
     });
   }
@@ -77,7 +77,7 @@ class _MyAppState extends State<MyApp> {
                     children: <Widget>[
                       Text(
                         'Available modes',
-                        style: Theme.of(context).textTheme.headline5,
+                        style: Theme.of(context).textTheme.headlineSmall,
                       ),
                       TextButton.icon(
                         icon: const Icon(Icons.refresh),
