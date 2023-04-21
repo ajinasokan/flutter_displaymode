@@ -1,3 +1,7 @@
+## 0.6.0
+
+* Android project upgrades (Gradle 8, AGP 8.0, compileSDK 33, Java 17). Thanks to [@vbuberen](https://github.com/vbuberen)
+
 ## 0.5.0
 
 * Calling `setHighRefreshRate` or `setLowRefreshRate` will always set the display mode. Fixes #20
@@ -6,7 +10,7 @@
 
 ## 0.4.1
 
-* Migrate to mavenCentral
+* Migrate to mavenCentral. Thanks to [@alvarisi](https://github.com/alvarisi)
 
 ## 0.4.0
 
@@ -30,7 +34,7 @@
 
 ## 0.2.0-nullsafety.0
 
-* Migrate to null safety.
+* Migrate to null safety. Thanks [@AlexV525](https://github.com/AlexV525)
 
 ## 0.1.1
 
