@@ -1,5 +1,5 @@
 name: flutter_displaymode
-description: A Flutter plugin to set display mode on Android.
+description: A Flutter plugin to set display mode (resolution, refresh rate) on Android platform. Allows to enable high refresh rate on supported devices.
 version: 0.5.0
 homepage: https://github.com/ajinasokan/flutter_displaymode
 
