@@ -40,7 +40,7 @@ public class DisplayModePlugin implements FlutterPlugin, MethodCallHandler, Acti
     @Override
     public void onMethodCall(@NonNull MethodCall call, @NonNull Result result) {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
-            result.error("noAPI", "API is supported only in Marshmallow and later", null);
+            result.error("noAPI", "API is supported only in Android 6 (Marshmallow) and later", null);
             return;
         }
 
@@ -80,7 +80,7 @@ public class DisplayModePlugin implements FlutterPlugin, MethodCallHandler, Acti
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     private void getActiveMode(@NonNull Result result) {
-        final Display.Mode mode =  getDisplay().getMode();
+        final Display.Mode mode = getDisplay().getMode();
         final HashMap<String, Object> ret = new HashMap<>();
         ret.put("id", mode.getModeId());
         ret.put("width", mode.getPhysicalWidth());
@@ -121,7 +121,7 @@ public class DisplayModePlugin implements FlutterPlugin, MethodCallHandler, Acti
 
         // look for matching mode and return it
         for (final Display.Mode mode : modes) {
-            if(params.preferredDisplayModeId == mode.getModeId()) {
+            if (params.preferredDisplayModeId == mode.getModeId()) {
                 final HashMap<String, Object> item = new HashMap<>();
                 item.put("id", mode.getModeId());
                 item.put("width", mode.getPhysicalWidth());

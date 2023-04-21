@@ -22,8 +22,6 @@ analyzer:
   strong-mode:
     implicit-casts: false
     implicit-dynamic: false
-  enable-experiment:
-    - extension-methods
   errors:
     # treat missing required parameters as a warning (not a hint)
     missing_required_param: warning
