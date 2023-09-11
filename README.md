@@ -1,3 +1,5 @@
+<a href="https://zerodha.tech"><img src="https://zerodha.tech/static/images/github-badge.svg" align="right" /></a>
+
 # Flutter Display Mode
 
 [![pub package](https://img.shields.io/pub/v/flutter_displaymode.svg)](https://pub.dev/packages/flutter_displaymode)
