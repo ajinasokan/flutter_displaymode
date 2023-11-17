@@ -53,8 +53,9 @@ class FlutterDisplayMode {
   }
 
   /// [setHighRefreshRate] changes preferred mode to highest refresh rate
+  /// return the new displaymode
   /// available maintaining current resolution
-  static Future<void> setHighRefreshRate() async {
+  static Future<DisplayMode> setHighRefreshRate() async {
     final List<DisplayMode> modes = await supported;
     final DisplayMode activeMode = await active;
 
@@ -68,11 +69,13 @@ class FlutterDisplayMode {
     }
 
     await setPreferredMode(newMode);
+    return newMode;
   }
 
   /// [setLowRefreshRate] changes preferred mode to lowest refresh rate
+  /// return the new displaymode
   /// available maintaining current resolution
-  static Future<void> setLowRefreshRate() async {
+  static Future<DisplayMode> setLowRefreshRate() async {
     final List<DisplayMode> modes = await supported;
     final DisplayMode activeMode = await active;
 
@@ -86,5 +89,6 @@ class FlutterDisplayMode {
     }
 
     await setPreferredMode(newMode);
+    return newMode;
   }
 }
