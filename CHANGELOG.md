@@ -1,3 +1,7 @@
+## 0.7.0
+
+* Android project upgrades
+
 ## 0.6.0
 
 * Android project upgrades (Gradle 8, AGP 8.0, compileSDK 33, Java 17). Thanks to [@vbuberen](https://github.com/vbuberen)
