@@ -1,16 +1,9 @@
+plugins {
+    id "com.android.library"
+}
+
 group 'com.ajinasokan.flutterdisplaymode'
 version '1.0'
-
-buildscript {
-    repositories {
-        google()
-        mavenCentral()
-    }
-
-    dependencies {
-        classpath 'com.android.tools.build:gradle:8.0.0'
-    }
-}
 
 rootProject.allprojects {
     repositories {
@@ -19,15 +12,13 @@ rootProject.allprojects {
     }
 }
 
-apply plugin: 'com.android.library'
-
 android {
     namespace 'com.ajinasokan.flutterdisplaymode'
 
-    compileSdkVersion 33
+    compileSdkVersion flutter.compileSdkVersion
 
     defaultConfig {
-        minSdkVersion 16
+        minSdkVersion flutter.minSdkVersion
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
